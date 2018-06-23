@@ -100,7 +100,6 @@ class Department(models.Model):
 # Custom User Model. Extended from the default user model
 #
 class CustomUser(AbstractUser):
-    # First/last name is not a global-friendly pattern
     name = models.CharField(blank=True, max_length=255, db_index = True, null = True,)
     designation = models.ForeignKey('Designation', on_delete=models.SET_NULL, db_index = True, blank = True, null = True,)
     location = models.ForeignKey('Location', on_delete = models.SET_NULL, db_index = True, blank = True, null = True,)
