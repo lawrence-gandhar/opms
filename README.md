@@ -1,2 +1,4 @@
-# opms
-Performance Management System
+# Performance Management System in Django (OPMS)
+# Database Engine : PostgreSQL
+
+
