@@ -89,7 +89,7 @@ class Department(models.Model):
     name = models.CharField(max_length = 100, blank = True, db_index = True, null = True,)
     status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
     location = models.ForeignKey('Location', blank = True, null = True, on_delete = models.SET_NULL, db_index = True,)
-
+    assigned_to = models.ForeignKey('self', db_index = True, on_delete = models.SET_NULL, null = True, blank = True,)
 
     def __str__(self):
 
