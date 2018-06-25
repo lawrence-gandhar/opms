@@ -9,11 +9,11 @@ from .models import *
 
 @admin.register(Designation)
 class DesignationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'abbr', 'name', 'department', 'status',)
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'abbr', 'name', 'assigned_to', 'location',  'status',)
+    list_display = ('id', 'abbr', 'name', 'assigned_to', 'location',  'status', 'is_parent',)
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
