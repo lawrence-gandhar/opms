@@ -13,7 +13,7 @@ class DesignationAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'abbr', 'name',  'location', 'status',)
+    list_display = ('id', 'abbr', 'name', 'assigned_to', 'location',  'status',)
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
