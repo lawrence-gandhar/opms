@@ -30,12 +30,38 @@ import sys, os, csv, json, datetime
 
 # Create your views here.
 
+#*******************************************************************************
+# DEPARTMENTS FETCHED ON LOCATION SELECT - USERS FORM ADMIN   
+#*******************************************************************************
 def location_selects(request):
     if request.is_ajax():
-
         if request.POST["id"]!="" and request.POST["id"].isnumeric():
-            departments = Department.objects.filter(Q(location_id = request.POST["id"]) | Q(location__isnull = True)).values('id','abbr','name')
+            departments = Department.objects.filter(Q(location_id = request.POST["id"]) | Q(location__isnull = True)).filter(is_parent = True, status = Department.ACTIVE).values('id','abbr','name')
             serialized_q = json.dumps(list(departments), cls=DjangoJSONEncoder)
             return HttpResponse(serialized_q)
         raise Http404      
     raise Http404    
+
+#*******************************************************************************
+# CHILD DEPARTMENT FETCHED ON PARENT DEPARTMENT SELECT - USERS FORM ADMIN   
+#*******************************************************************************    
+def department_selects(request):
+    if request.is_ajax():
+        if request.POST["id"]!="" and request.POST["id"].isnumeric():
+            departments = Department.objects.filter(assigned_to_id = request.POST["id"], status = Department.ACTIVE, is_parent = False).values('id','abbr','name')
+            serialized_q = json.dumps(list(departments), cls=DjangoJSONEncoder)
+            return HttpResponse(serialized_q)
+        raise Http404      
+    raise Http404   
+
+#*******************************************************************************
+# DESIGNATION FETCHED ON PARENT DEPARTMENT SELECT - USERS FORM ADMIN   
+#*******************************************************************************    
+def designation_selects(request):
+    if request.is_ajax():
+        if request.POST["id"]!="" and request.POST["id"].isnumeric():
+            designation = Designation.objects.filter(department_id = request.POST["id"], status = Designation.ACTIVE).values('id','abbr','name')
+            serialized_q = json.dumps(list(designation), cls=DjangoJSONEncoder)
+            return HttpResponse(serialized_q)
+        raise Http404      
+    raise Http404     

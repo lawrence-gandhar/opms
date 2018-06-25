@@ -29,7 +29,7 @@
         $(".field-user_permissions").hide();
         $(".field-groups").hide();
 
-
+        
         /*
         # Since super user designates that this user has all permissions without explicitly assigning them. 
         # if is_admin is selected, will hide permissions and group dowdowns.
@@ -54,14 +54,50 @@
             $(".field-groups").hide();
         });
 
+        /* 
+        Default values set to blank in select fields
+        */
+
+        $("select#id_department").empty();
+        $("select#id_designation").empty();
+
+        /* 
+        Add a parent select for Deparment
+        */
+       $("select#id_department").before('<select style="margin-right:10px;" name="department_parents" id="id_department_parents"></select>')
+
 
         /*
-        Populate department fields on location change. 
+        Populate department field on location change. 
         */
 
         $("select#id_location").change(function(){
+
+            $("select#id_department_parents, select#id_department, select#id_designation,select#id_assigned_to").empty();
+
             $.post("/location-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
                
+                var fetched_data = '<option value="" selected="">---------</option>';
+
+                $.each($.parseJSON(data),function(i,v){
+                    console.log(v);
+                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
+                });
+
+                $("select#id_department_parents").empty().html(fetched_data);
+
+            });
+        });  
+        
+        /*
+        Populate child department field on parent department change. 
+        */
+
+        $("select#id_department_parents").change(function(){
+            $("select#id_department, select#id_designation,select#id_assigned_to").empty();
+
+            $.post("/department-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
+            
                 var fetched_data = '<option value="" selected="">---------</option>';
 
                 $.each($.parseJSON(data),function(i,v){
@@ -72,13 +108,28 @@
                 $("select#id_department").empty().html(fetched_data);
 
             });
-        });  
-        
-        
-        
+        });
 
+        /*
+        Populate child department field on parent department change. 
+        */
 
+        $("select#id_department").change(function(){
+            $("select#id_designation,select#id_assigned_to").empty();
 
+            $.post("/designation-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
+            
+                var fetched_data = '<option value="" selected="">---------</option>';
+
+                $.each($.parseJSON(data),function(i,v){
+                    console.log(v);
+                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
+                });
+
+                $("select#id_designation").empty().html(fetched_data);
+
+            });
+        });        
     });
 
 })(django.jQuery);
