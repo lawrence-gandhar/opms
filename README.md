@@ -1,6 +1,7 @@
 # OPMS
-Performance Management System in Django
-Database Engine : PostgreSQL
+**Performance Management System in Django**
+
+**Database Engine :** PostgreSQL
 
 > User Model:
 
