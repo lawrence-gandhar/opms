@@ -21,7 +21,7 @@ class Designation(models.Model):
     def __str__(self):
         
         if self.name != "":
-            return self.name + "(" + self.abbr +" )"
+            return self.name + " ( " + self.abbr +" )"
         return self.abbr
 
     class META:
@@ -95,7 +95,7 @@ class Department(models.Model):
     def __str__(self):
 
         if self.name != "":
-            return self.name + "(" + self.abbr +" )"
+            return self.name + " ( " + self.abbr +" )"
         return self.abbr
 
     class META:
