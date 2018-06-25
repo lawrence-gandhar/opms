@@ -54,6 +54,19 @@
             $(".field-groups").hide();
         });
 
+
+        /*
+        Populate department fields on location change. 
+        */
+
+        $("select#id_location").change(function(){
+            $.post("/location-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()},function(){
+            
+            });
+        });        
+
+
+
     });
 
 })(django.jQuery);
