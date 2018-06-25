@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'opms',
-        'USER': 'gv',
-        'PASSWORD': '1234',
+        'USER': 'postgres',
+        'PASSWORD': 'fusion@123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
