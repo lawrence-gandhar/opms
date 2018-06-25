@@ -1,5 +1,5 @@
 # OPMS
-**Performance Management System in Django**
+**Employee Performance Management System in Django**
 
 **Database Engine :** PostgreSQL
 
