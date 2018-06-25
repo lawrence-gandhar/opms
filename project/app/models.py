@@ -6,29 +6,6 @@ from django.db import models
 # Create your models here.
 
 #
-# Designation Model. Used to specify the designation of the user
-#
-class Designation(models.Model):
-    ACTIVE = 1
-    INACTIVE = 0
-    ACTIVE_INACTIVE = ((ACTIVE, 'Active'),(INACTIVE,'In-Active'))
-
-    abbr = models.CharField(max_length = 20, unique = True, db_index = True,)
-    name = models.CharField(max_length = 100, blank = True, db_index = True, null = True,)
-    status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
-    department = models.ForeignKey('Department', blank = True, null = True, on_delete = models.SET_NULL, db_index = True,)
-
-    def __str__(self):
-        
-        if self.name != "":
-            return self.name + " ( " + self.abbr +" )"
-        return self.abbr
-
-    class META:
-        ordering = ["id"]
-        verbose_name_plural = 'designation_tbl'
-
-#
 # Location Model. Used for specifying the location at which the user is working
 #
 
@@ -102,7 +79,29 @@ class Department(models.Model):
         ordering = ["id"]
         verbose_name_plural = 'department_tbl'
     
+#
+# Designation Model. Used to specify the designation of the user
+#
+class Designation(models.Model):
+    ACTIVE = 1
+    INACTIVE = 0
+    ACTIVE_INACTIVE = ((ACTIVE, 'Active'),(INACTIVE,'In-Active'))
 
+    abbr = models.CharField(max_length = 20, unique = True, db_index = True,)
+    name = models.CharField(max_length = 100, blank = True, db_index = True, null = True,)
+    status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
+    department = models.ForeignKey('Department', blank = True, null = True, on_delete = models.SET_NULL, db_index = True,)
+
+    def __str__(self):
+        
+        if self.name != "":
+            return self.name + " ( " + self.abbr +" )"
+        return self.abbr
+
+    class META:
+        ordering = ["id"]
+        verbose_name_plural = 'designation_tbl'
+        
 #
 # Custom User Model. Extended from the default user model
 #
