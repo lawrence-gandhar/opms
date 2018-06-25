@@ -17,11 +17,11 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'abbr', 'name', 'status',)
 
 @admin.register(Usertype)
 class UsertypeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id','name','assigned_to', 'link', 'template_folder', 'access_list', 'status',)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
