@@ -16,6 +16,7 @@ class Designation(models.Model):
     abbr = models.CharField(max_length = 20, unique = True, db_index = True,)
     name = models.CharField(max_length = 100, blank = True, db_index = True, null = True,)
     status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
+    department = models.ForeignKey('Department', blank = True, null = True, on_delete = models.SET_NULL, db_index = True,)
 
     def __str__(self):
         
