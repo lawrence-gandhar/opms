@@ -60,11 +60,17 @@ class Usertype(models.Model):
     ACTIVE_INACTIVE = ((ACTIVE, 'Active'),(INACTIVE,'In-Active'))
 
     name = models.CharField(blank=True, max_length=255, db_index = True, unique = True,)
-    assigned_to = models.ForeignKey('self', db_index = True, on_delete = models.SET_NULL, null = True,)
+    assigned_to = models.ForeignKey('self', db_index = True, on_delete = models.SET_NULL, null = True, blank = True,)
     status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
+    link = models.CharField(max_length=100, null = True, blank = True, db_index = True,)
+    template_folder = models.CharField(max_length=20, null = True, blank = True, db_index = True,)
+    access = models.ManyToManyField('self', db_index = True, blank = True, symmetrical=False, related_name = 'user_access')
 
     def __str__(self):
         return self.name
+
+    def access_list(self):
+        return ', '.join([ accessme.name for accessme in self.access.all()])    
 
     class META:
         ordering = ["id"]
