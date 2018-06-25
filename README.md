@@ -24,3 +24,8 @@ You can add multiple locations with the same name but the abbr should be unique.
 A Department can be a parent department with multiple departments assigned to it. In the add user form, the department section has two dropdowns. First dropdown shows the parent department in an assigned location. You may also find departments that are not assigned to any locations. It means that the department is available across all locations. On parent department select, the second dropdown is populated with the departments assigned to the selected parent department.
 
 
+> Designation Model:
+
+Designation Model is related to the Department model. If no department is assigned to a record, then, it will take the designation as available across all departments. It too has to abbr field, that is to be unique.
+
+
