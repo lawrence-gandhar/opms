@@ -60,10 +60,22 @@
         */
 
         $("select#id_location").change(function(){
-            $.post("/location-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()},function(){
-            
+            $.post("/location-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
+               
+                var fetched_data = '<option value="" selected="">---------</option>';
+
+                $.each($.parseJSON(data),function(i,v){
+                    console.log(v);
+                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
+                });
+
+                $("select#id_department").empty().html(fetched_data);
+
             });
-        });        
+        });  
+        
+        
+        
 
 
 
