@@ -25,4 +25,7 @@ class UsertypeAdmin(admin.ModelAdmin):
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    pass        
+    pass  
+
+    class Media:
+        js = ('admin_js/usermodel.js',)      

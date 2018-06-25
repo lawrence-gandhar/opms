@@ -107,5 +107,4 @@ class CustomUser(AbstractUser):
     usertype = models.ForeignKey('Usertype', db_index = True, blank = True, null = True, on_delete = models.SET_NULL,)
     assigned_to = models.ForeignKey('self', db_index = True, blank = True, null = True, on_delete = models.SET_NULL,)
 
-    class Media:
-        js = ('js/admin/mymodel.js',)
+    
