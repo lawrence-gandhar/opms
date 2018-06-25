@@ -60,7 +60,7 @@ class Usertype(models.Model):
     ACTIVE_INACTIVE = ((ACTIVE, 'Active'),(INACTIVE,'In-Active'))
 
     name = models.CharField(blank=True, max_length=255, db_index = True, unique = True,)
-    assigned_to = models.ForeignKey('self', db_index = True,)
+    assigned_to = models.ForeignKey('self', db_index = True, on_delete = models.SET_NULL, null = True,)
     status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
 
     def __str__(self):
