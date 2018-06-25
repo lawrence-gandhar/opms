@@ -21,7 +21,7 @@ class Location(models.Model):
     def __str__(self):
 
         if self.name != "":
-            return self.name + "(" + self.abbr +" )"
+            return self.name + " ( " + self.abbr +" )"
         return self.abbr
 
     class META:
