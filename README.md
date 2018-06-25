@@ -11,7 +11,7 @@ User model is extended to add department, designation, location, display_name an
 
 > Usertype Model:
 
-This model defines the different roles for the users. Such as agents, managers, supervisors and hr. You can assign a user a specific usertype. Usertype is assigned to other usertype. For example, an agent reports to a supervisor, a supervisor to his manager and a manager to his boss. There is a field known as access, this field allows to set access for a usertype to view records of only its assigned usertypes. 
+This model defines the different roles for the users. Such as agents, managers, supervisors and hr. You can assign a user to a specific usertype. For example, an agent reports to a supervisor, a supervisor to his manager and a manager to his boss. There is a field known as access, this field allows to set access for a usertype to view records of the usertypes assigned to it. 
 
 
 > Location Model:
