@@ -9,7 +9,7 @@ from django.db import IntegrityError, connection
 from django.core.serializers.json import DjangoJSONEncoder 
 from django.core.serializers import serialize
 
-from django.http import HttpResponse, Http404, HttpResponseForbidden
+from django.http import HttpResponse, Http404, HttpResponseForbidden, HttpResponseRedirect
 
 # Paginator class import
 from django.core.paginator import Paginator
@@ -29,6 +29,7 @@ import sys, os, csv, json, datetime
 #
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -128,7 +129,6 @@ def get_admin_user_list(request):
 #*******************************************************************************   
 
 def index(request):
-    
     submit = request.POST.get("submit", False)
 
     if submit:
@@ -139,3 +139,17 @@ def index(request):
         else:
             return redirect('/')
     return render(request, 'app/index.html', {})
+
+
+#*******************************************************************************
+# LOGOUT  
+#*******************************************************************************   
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')   
+
+#*******************************************************************************
+# LOGOUT  
+#*******************************************************************************  
