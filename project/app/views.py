@@ -120,3 +120,8 @@ def get_admin_user_list(request):
             return HttpResponse(serialized_q)
         raise Http404      
     raise Http404 
+
+#*******************************************************************************
+# AUTHENTICATION  
+#*******************************************************************************   
+
