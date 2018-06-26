@@ -115,7 +115,7 @@ def get_admin_user_list(request):
             try:
                 assigned_usertype = Usertype.objects.get(status = Usertype.ACTIVE, pk = request.POST["usertype_id"])
                 users_list = users_list.filter(usertype_id = assigned_usertype.assigned_to_id)
-            except ObjectDoesNotExist:    
+            except Usertype.DoesNotExist:    
                 pass
 
             users_list = users_list.values('id','name')
@@ -135,9 +135,18 @@ def index(request):
         user = authenticate(username = request.POST["username"], password = request.POST["password"])
         if user is not None:
             login(request, user)
-            return redirect('dashboard/')
+
+            url_link = '/'
+
+            try:
+                usertype_link = Usertype.objects.get(pk = int(user.usertype_id))
+                url_link = usertype_link.link
+            except ObjectDoesNotExist:
+                pass    
+
+            return redirect(url_link + 'dashboard/')
         else:
-            return redirect('/')
+            return HttpResponseRedirect('')
     return render(request, 'app/index.html', {})
 
 
@@ -148,7 +157,7 @@ def index(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/')   
+    return HttpResponseRedirect('home')   
 
 #*******************************************************************************
 # LOGOUT  
