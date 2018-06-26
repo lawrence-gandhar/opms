@@ -78,7 +78,7 @@ p {
 #login form span {
   background-color: #363b41;
   border-radius: 3px 0px 0px 3px;
-  color: #606468;
+  color: #ffffff;
   display: block;
   float: left;
   height: 50px;
@@ -94,7 +94,7 @@ p {
 #login form input[type="text"], input[type="password"] {
   background-color: #3b4148;
   border-radius: 0px 3px 3px 0px;
-  color: #606468;
+  color: #ffffff;
   margin-bottom: 1em;
   padding: 0 16px;
   width: 230px;
