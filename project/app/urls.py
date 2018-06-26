@@ -9,5 +9,6 @@ urlpatterns = [
     path('admin-userform-list/', views.get_admin_user_list, name='admin-userform-list'),
 
     path('', views.index, name='index'),    
+    path('logout/', views.user_logout, name='logout'),    
 
 ]
