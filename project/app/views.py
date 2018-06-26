@@ -24,6 +24,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Other imports
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from .models import *
 import sys, os, csv, json, datetime
 
@@ -65,3 +66,57 @@ def designation_selects(request):
             return HttpResponse(serialized_q)
         raise Http404      
     raise Http404     
+
+#*******************************************************************************
+# GET USER DETAILS FOR LOCATION, DEPARTMENTS, DESIGNATION, ASSIGNED TO - USERS FORM ADMIN   
+#*******************************************************************************  
+
+def get_admin_userform_details(request):
+    if request.is_ajax():
+        if request.POST["id"]!="" and request.POST["id"].isnumeric():
+            
+            data = dict({"location_id":"", "parent_department":"", "department_id":"", "designation_id":"", "assigned_to_id":""})
+
+            try:
+                users = CustomUser.objects.get(pk = request.POST["id"])
+                parent_department = Department.objects.get(pk = users.department_id)
+                
+                data["location_id"] = users.location_id
+                data["parent_department"] = parent_department.assigned_to_id
+                data["department_id"] = users.department_id
+                data["designation_id"] = users.designation_id
+                data["assigned_to_id"] = users.assigned_to_id
+            except ObjectDoesNotExist:
+                pass
+
+            serialized_q = json.dumps(data)
+            return HttpResponse(serialized_q)
+        raise Http404      
+    raise Http404  
+
+#*******************************************************************************
+# DESIGNATION FETCHED ON PARENT DEPARTMENT SELECT - USERS FORM ADMIN   
+#*******************************************************************************       
+
+def get_admin_user_list(request):
+    if request.is_ajax():
+        if request.POST["id"]!="" and request.POST["id"].isnumeric():
+            users_list = CustomUser.objects.filter(is_active = True)
+            
+            try:
+                assigned_department = Department.objects.get(status = Department.ACTIVE, pk = request.POST["id"])   
+                users_list = users_list.filter((Q((Q(department_id = request.POST["id"])) | (Q(department_id__isnull = True)))) | ((Q(department_id = assigned_department.assigned_to_id))))
+            except ObjectDoesNotExist:
+                pass
+
+            try:
+                assigned_usertype = Usertype.objects.get(status = Usertype.ACTIVE, pk = request.POST["usertype_id"])
+                users_list = users_list.filter(usertype_id = assigned_usertype.assigned_to_id)
+            except ObjectDoesNotExist:    
+                pass
+
+            users_list = users_list.values('id','name')
+            serialized_q = json.dumps(list(users_list), cls=DjangoJSONEncoder)
+            return HttpResponse(serialized_q)
+        raise Http404      
+    raise Http404 
