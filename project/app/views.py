@@ -23,10 +23,12 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Other imports
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout
-from django.contrib.auth.models import User
 from .models import *
 import sys, os, csv, json, datetime
+
+#
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -126,4 +128,14 @@ def get_admin_user_list(request):
 #*******************************************************************************   
 
 def index(request):
+    
+    submit = request.POST.get("submit", False)
+
+    if submit:
+        user = authenticate(username = request.POST["username"], password = request.POST["password"])
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard/')
+        else:
+            return redirect('/')
     return render(request, 'app/index.html', {})
