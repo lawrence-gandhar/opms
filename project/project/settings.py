@@ -123,6 +123,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Defines the model used instead of the builtin user model
 AUTH_USER_MODEL = 'app.CustomUser'
 
 # This is the default location for login. Else logout will redirect to default url i.e. /accounts/login
