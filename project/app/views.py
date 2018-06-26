@@ -125,3 +125,5 @@ def get_admin_user_list(request):
 # AUTHENTICATION  
 #*******************************************************************************   
 
+def index(request):
+    return render(request, 'app/index.html', {})
