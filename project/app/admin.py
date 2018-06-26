@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from .models import * 
 
 # Register your models here.
@@ -25,7 +26,9 @@ class UsertypeAdmin(admin.ModelAdmin):
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    pass  
-
+    pass
+    
     class Media:
         js = ('admin_js/usermodel.js',)      
+  
+admin.site.unregister(Group)  
