@@ -2,6 +2,26 @@
     'use strict';
     
     $(document).ready(function() {
+
+        /* Edit Form Details Start */ 
+        var pathname = window.location.pathname;
+		var path_id = pathname.split("/");
+        
+        var user_details = "";
+
+		if(path_id[path_id.length - 2] == "change"){
+			
+			var user_id = parseInt(path_id[path_id.length - 3]);
+			
+			$.post("/admin-userform-details/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":user_id},function(data){
+                user_details = $.parseJSON(data);
+                location_change($("select#id_location option:selected").val(), user_details);
+            });
+        }
+        /* Edit Form Details End */ 
+
+
+
        /*
        # Setting field order in the admin user form. 
        */     
@@ -62,7 +82,7 @@
         $("select#id_designation").empty();
 
         /* 
-        Add a parent select for Deparment
+        Add a parent select for Department
         */
        $("select#id_department").before('<select style="margin-right:10px;" name="department_parents" id="id_department_parents"></select>')
 
@@ -72,42 +92,18 @@
         */
 
         $("select#id_location").change(function(){
-
             $("select#id_department_parents, select#id_department, select#id_designation,select#id_assigned_to").empty();
-
-            $.post("/location-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
-               
-                var fetched_data = '<option value="" selected="">---------</option>';
-
-                $.each($.parseJSON(data),function(i,v){
-                    console.log(v);
-                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
-                });
-
-                $("select#id_department_parents").empty().html(fetched_data);
-
-            });
+            location_change($("select#id_location").val(), user_details)
         });  
-        
+
         /*
         Populate child department field on parent department change. 
         */
 
         $("select#id_department_parents").change(function(){
+            //console.log(user_details);
             $("select#id_department, select#id_designation,select#id_assigned_to").empty();
-
-            $.post("/department-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
-            
-                var fetched_data = '<option value="" selected="">---------</option>';
-
-                $.each($.parseJSON(data),function(i,v){
-                    console.log(v);
-                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
-                });
-
-                $("select#id_department").empty().html(fetched_data);
-
-            });
+            department_change($("select#id_department_parents").val(), user_details)
         });
 
         /*
@@ -116,20 +112,83 @@
 
         $("select#id_department").change(function(){
             $("select#id_designation,select#id_assigned_to").empty();
-
-            $.post("/designation-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$(this).val()},function(data){
-            
-                var fetched_data = '<option value="" selected="">---------</option>';
-
-                $.each($.parseJSON(data),function(i,v){
-                    console.log(v);
-                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
-                });
-
-                $("select#id_designation").empty().html(fetched_data);
-
-            });
-        });        
+            designation_change($("select#id_department").val(), user_details)
+        });
+        
+        /* 
+        Dropdown values for already selected fields
+        */   
+       
     });
+
+    function location_change(id, user_details){
+        $.post("/location-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":id},function(data){
+           
+            var fetched_data = '<option value="">---------</option>';
+
+            $.each($.parseJSON(data),function(i,v){
+                if(user_details.parent_department == v.id)
+                    fetched_data += '<option value="'+v.id+'" selected>'+v.name+' ( '+v.abbr+' )</option>';
+                else
+                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
+            });
+
+            $("select#id_department_parents").empty().html(fetched_data);
+            department_change($("select#id_department_parents option:selected").val(), user_details);
+        });
+    }
+
+    function department_change(id, user_details){
+        $.post("/department-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":id},function(data){
+            
+            var fetched_data = '<option value="">---------</option>';
+
+            $.each($.parseJSON(data),function(i,v){
+                if(user_details.department_id == v.id)
+                    fetched_data += '<option value="'+v.id+'" selected>'+v.name+' ( '+v.abbr+' )</option>';
+                else
+                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
+            });
+
+            $("select#id_department").empty().html(fetched_data);
+            designation_change($("select#id_department option:selected").val(), user_details);
+            user_list(user_details);
+        });
+    }
+
+    function designation_change(id, user_details){
+        $.post("/designation-select/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":id},function(data){
+            
+            var fetched_data = '<option value="">---------</option>';
+
+            $.each($.parseJSON(data),function(i,v){
+                if(user_details.designation_id == v.id)
+                    fetched_data += '<option value="'+v.id+'" selected>'+v.name+' ( '+v.abbr+' )</option>';
+                else
+                    fetched_data += '<option value="'+v.id+'">'+v.name+' ( '+v.abbr+' )</option>';
+            });
+
+            $("select#id_designation").empty().html(fetched_data);
+        });
+    }
+
+
+    function user_list(user_details){
+        $.post("/admin-userform-list/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$("select#id_department option:selected").val(), "usertype_id":$("select#id_usertype option:selected").val()},function(data){
+            var fetched_data = '<option value="">---------</option>';
+
+            $.each($.parseJSON(data),function(i,v){
+                if(user_details.assigned_to_id == v.id)
+                    fetched_data += '<option value="'+v.id+'" selected>'+v.name+'</option>';
+                else
+                    fetched_data += '<option value="'+v.id+'">'+v.name+'</option>';
+            });
+
+            $("select#id_assigned_to").empty().html(fetched_data);
+        });
+    }
+
+
+
 
 })(django.jQuery);
