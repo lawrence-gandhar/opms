@@ -51,8 +51,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(Assessment_Settings)
 class Assessment_SettingsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'abbr', 'year', 'session', 'status', 'enable_self_assessment_form', 'self_assess_users',  'self_assessment_form_start_date', 'self_assessment_form_end_date', 'enable_assessment_grade_form', 'assess_graders', 'assessment_grade_start_date', 'assessment_grade_end_date', 'template_location', )
-
+    list_display = ('name', 'abbr', 'year', 'session', 'status', 'enable_self_assessment_form', 'self_assess_users', 'self_assessment_form_start_date', 'self_assessment_form_end_date', 'enable_assessment_grade_form', 'assess_graders', 'assessment_grade_start_date', 'assessment_grade_end_date', 'enable_assess_parameters', 'parameter_form_users', 'parameter_form_graders', 'parameters_start_date', 'parameters_end_date', 'self_assess_template', 'assess_grade_template', 'parameters_template', )
 
   
 admin.site.unregister(Group)  
