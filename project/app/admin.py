@@ -46,6 +46,13 @@ class CustomUserAdmin(admin.ModelAdmin):
     pass
 
     class Media:
-        js = ('admin_js/usermodel.js',)      
+        js = ('admin_js/usermodel.js',)    
+
+
+@admin.register(Assessment_Settings)
+class Assessment_SettingsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'abbr', 'year', 'session', 'status', 'enable_self_assessment_form', 'self_assess_users',  'self_assessment_form_start_date', 'self_assessment_form_end_date', 'enable_assessment_grade_form', 'assessment_grade_start_date', 'assessment_grade_end_date', 'template_location', )
+
+
   
 admin.site.unregister(Group)  
