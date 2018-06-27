@@ -174,7 +174,13 @@ def user_logout(request, usertype = None):
 
 @login_required
 def dashboard(request, usertype = None):
-    pass
+    
+    #
+    # Get assessment settings that is active today
+    #
+    #assessment_settings = Assessment_Settings.objects.filter(__date=timezone.now())
+
+
     return render(request, 'app/base.html',{})
 
 
