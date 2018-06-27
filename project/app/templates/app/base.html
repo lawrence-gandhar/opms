@@ -105,57 +105,7 @@
     <section style="background-color:#3b4148">
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
-            <!-- User Info -->
-
-            <!--
-            <div class="user-info">
-                <div class="image">
-                    <img src="{% static 'images/user.png' %}" width="48" height="48" alt="User" class=""/>
-                </div>
-                <div class="info-container col-black">
-                    <div class="name col-black" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{firstname|safe}} {{lastname|safe}}</div>
-                    <div class="email col-black" style="margin-right:10px;">{{email|safe}}</div>
-                    <div class="btn-group user-helper-dropdown" style="">
-                        <i class="material-icons col-grey" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="{% current_user_link user.usertype_id %}logout/"><i class="material-icons">input</i>Sign Out</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            -->
-            <!-- #User Info -->
-            <!-- Menu -->
-            
-                <div class="menu">
-                    <ul class="list">
-                        <li class="header">MAIN NAVIGATION</li>
-                        <li class="active">
-                            <a href="/supervisor">
-                                <i class="material-icons">home</i>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/supervisor/manage/">
-                                <i class="material-icons">dns</i>
-                                <span>Manage</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- #Menu -->
-                <!-- Footer -->
-                <div class="legal">
-                    <div class="copyright">
-                        &copy; 2018 - 2019 <a href="javascript:void(0);">Fusion BPO</a>.
-                    </div>
-                    <div class="version">
-                        <b>Version: </b> 1.0.5
-                    </div>
-                </div>
-            <!-- #Footer -->
+           {% include user.usertype_id|menu_template %}
         </aside>
         <!-- #END# Left Sidebar -->
         
