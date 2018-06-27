@@ -133,9 +133,23 @@
     <!-- Demo Js -->
     <script src="{% static 'js/demo.js' %}"></script>
 		
-	
-	
-	
+	<!-- Script for adding and removing class "active" on li tags in navigation -->
+    <script>
+        
+        var page_url = window.location.pathname
+        
+        $("div.menu ul li a").each(function(i,v){
+            console.log($(v).attr("href"));
+
+            if(page_url == $(v).attr("href")){
+                $("div.menu ul li").removeClass("active");
+                $(v).parent().addClass("active");
+            }else console.log("-->" + page_url)
+        });
+    
+    </script>
+	<!-- Script End -->
+
 </body>
 
 </html>
