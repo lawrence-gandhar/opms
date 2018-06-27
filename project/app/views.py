@@ -37,6 +37,8 @@ from django.contrib.auth.decorators import login_required
 #*******************************************************************************
 # DEPARTMENTS FETCHED ON LOCATION SELECT - USERS FORM ADMIN   
 #*******************************************************************************
+
+@login_required
 def location_selects(request):
     if request.is_ajax():
         if request.POST["id"]!="" and request.POST["id"].isnumeric():
@@ -48,7 +50,9 @@ def location_selects(request):
 
 #*******************************************************************************
 # CHILD DEPARTMENT FETCHED ON PARENT DEPARTMENT SELECT - USERS FORM ADMIN   
-#*******************************************************************************    
+#******************************************************************************* 
+
+@login_required   
 def department_selects(request):
     if request.is_ajax():
         if request.POST["id"]!="" and request.POST["id"].isnumeric():
@@ -60,7 +64,9 @@ def department_selects(request):
 
 #*******************************************************************************
 # DESIGNATION FETCHED ON PARENT DEPARTMENT SELECT - USERS FORM ADMIN   
-#*******************************************************************************    
+#******************************************************************************* 
+   
+@login_required
 def designation_selects(request):
     if request.is_ajax():
         if request.POST["id"]!="" and request.POST["id"].isnumeric():
@@ -74,6 +80,7 @@ def designation_selects(request):
 # GET USER DETAILS FOR LOCATION, DEPARTMENTS, DESIGNATION, ASSIGNED TO - USERS FORM ADMIN   
 #*******************************************************************************  
 
+@login_required
 def get_admin_userform_details(request):
     if request.is_ajax():
         if request.POST["id"]!="" and request.POST["id"].isnumeric():
@@ -99,8 +106,9 @@ def get_admin_userform_details(request):
 
 #*******************************************************************************
 # DESIGNATION FETCHED ON PARENT DEPARTMENT SELECT - USERS FORM ADMIN   
-#*******************************************************************************       
-
+#*******************************************************************************   
+    
+@login_required
 def get_admin_user_list(request):
     if request.is_ajax():
         if request.POST["id"]!="" and request.POST["id"].isnumeric():
@@ -141,12 +149,12 @@ def index(request):
             try:
                 usertype_link = Usertype.objects.get(pk = int(user.usertype_id))
                 url_link = usertype_link.link
-            except ObjectDoesNotExist:
-                pass    
+            except Usertype.DoesNotExist:
+                return render(request, 'app/index.html', {}) 
+            except TypeError: 
+                return render(request, 'app/index.html', {})      
 
             return redirect(url_link + 'dashboard/')
-        else:
-            return HttpResponseRedirect('')
     return render(request, 'app/index.html', {})
 
 
@@ -155,10 +163,15 @@ def index(request):
 #*******************************************************************************   
 
 @login_required
-def user_logout(request):
+def user_logout(request, usertype = None):
     logout(request)
-    return HttpResponseRedirect('home')   
+    return HttpResponseRedirect('/')   
 
 #*******************************************************************************
-# LOGOUT  
+# DASHBOARD  
 #*******************************************************************************  
+
+@login_required
+def dashboard(request, usertype = None):
+    pass
+    return render(request, 'app/dashboard.html',{})
