@@ -1923,6 +1923,13 @@
   .bg-light-green .content .number {
     color: #fff !important; }
 
+.bg-lightest-green {
+  background-color: #9ffbbe !important;
+  color: #fff; }
+  .bg-lightest-green .content .text,
+  .bg-lightest-green .content .number {
+    color: #fff !important; }  
+
 .bg-lime {
   background-color: #CDDC39 !important;
   color: #fff; }
