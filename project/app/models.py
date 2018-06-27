@@ -129,19 +129,38 @@ class Assessment_Settings(models.Model):
     status = models.BooleanField(default = True, db_index = True,)
     enable_self_assessment_form = models.BooleanField(default = True, db_index = True, verbose_name = "Self Assessment")
     self_assessment_users = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="self_assess_form_users")
+    self_assessment_form_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "self assess startdate",)
+    self_assessment_form_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "self assess enddate",)
     enable_assessment_grade_form = models.BooleanField(default = True, db_index = True, verbose_name = "Assessment Grading")
     assessment_graders = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="assess_grade_users")
-    self_assessment_form_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
-    self_assessment_form_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
-    assessment_grade_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
-    assessment_grade_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
-    template_location = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
+    assessment_grade_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "assess grade startdate",)
+    assessment_grade_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "assess grade enddate",)
+    enable_assess_parameters = models.BooleanField(default = True, db_index = True, verbose_name = "Assessment Parameters Form")
+    parameters_users = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can fill the parameters form", related_name="parameter_form_users", verbose_name = "Parameter Form Fillers")
+    parameters_graders = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can grade the parameters form", related_name="parameter_grade_users", verbose_name = "Parameter Form Graders")
+    parameters_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "parameters startdate",)
+    parameters_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "parameters enddate",)
+    self_assess_template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
+    assess_grade_template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
+    parameters_template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
 
     def __str__(self):
         
         if self.name != "":
             return self.name + " ( " + self.abbr +" )"
         return self.abbr
+
+    def self_assess_users(self):
+        return ', '.join([user.name for user in self.self_assessment_users.all()])    
+
+    def assess_graders(self):
+        return ', '.join([user.name for user in self.assessment_graders.all()])
+
+    def parameter_form_users(self):
+        return ', '.join([user.name for user in self.parameters_users.all()])   
+
+    def parameter_form_graders(self):
+        return ', '.join([user.name for user in self.parameters_graders.all()])         
 
     class META:
         ordering = ["id"]
