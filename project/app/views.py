@@ -167,6 +167,7 @@ def user_logout(request, usertype = None):
     logout(request)
     return HttpResponseRedirect('/')   
 
+
 #*******************************************************************************
 # DASHBOARD  
 #*******************************************************************************  
@@ -174,4 +175,14 @@ def user_logout(request, usertype = None):
 @login_required
 def dashboard(request, usertype = None):
     pass
-    return render(request, 'app/dashboard.html',{})
+    return render(request, 'app/base.html',{})
+
+
+#*******************************************************************************
+# SELF ASSESSMENT FORM  
+#*******************************************************************************  
+
+@login_required
+def self_assessment_form(request, usertype = None):
+    pass
+    return render(request, 'app/self_assessment_form.html',{})    
