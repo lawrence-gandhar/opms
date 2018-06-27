@@ -1,0 +1,28 @@
+{% load userdata %}
+<div class="menu">
+	<ul class="list">
+		<li class="header">MAIN NAVIGATION</li>
+		<li class="active">
+			<a href="{% current_user_link user.usertype_id %}">
+				<i class="material-icons">home</i>
+				<span>Home</span>
+			</a>
+		</li>
+		<li>
+			<a href="{% current_user_link user.usertype_id %}self-assessment-a/">
+				<i class="material-icons">dns</i>
+				<span>Self Assessment Form</span>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- #Menu -->
+<!-- Footer -->
+<div class="legal">
+	<div class="copyright">
+		&copy; 2018 - 2019 <a href="javascript:void(0);">Fusion BPO</a>.
+	</div>
+	<div class="version">
+		<b>Version: </b> 1.0.5
+	</div>
+</div>
