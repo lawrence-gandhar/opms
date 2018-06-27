@@ -117,4 +117,32 @@ class CustomUser(AbstractUser):
     designation = models.ForeignKey('Designation', on_delete=models.SET_NULL, db_index = True, blank = True, null = True,)
     assigned_to = models.ForeignKey('self', db_index = True, blank = True, null = True, on_delete = models.SET_NULL,)
 
-    
+
+#
+# Assessments Settings 
+#     
+class Assessment_Settings(models.Model):
+    name = models.CharField(max_length = 250, db_index = True, blank = True, null = True,)
+    abbr = models.CharField(max_length = 20, unique = True, db_index = True,)
+    year = models.CharField(max_length = 4, db_index = True, blank = True, null = True,) 
+    session = models.CharField(max_length = 20, db_index = True, blank = True, null = True,)
+    status = models.BooleanField(default = True, db_index = True,)
+    enable_self_assessment_form = models.BooleanField(default = True, db_index = True, verbose_name = "Self Assessment")
+    self_assessment_users = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="self_assess_form_users")
+    enable_assessment_grade_form = models.BooleanField(default = True, db_index = True, verbose_name = "Assessment Grading")
+    assessment_graders = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="assess_grade_users")
+    self_assessment_form_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
+    self_assessment_form_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
+    assessment_grade_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
+    assessment_grade_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True,)
+    template_location = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
+
+    def __str__(self):
+        
+        if self.name != "":
+            return self.name + " ( " + self.abbr +" )"
+        return self.abbr
+
+    class META:
+        ordering = ["id"]
+        verbose_name_plural = 'assessment_settings'
