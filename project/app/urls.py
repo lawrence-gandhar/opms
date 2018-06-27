@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -9,6 +9,8 @@ urlpatterns = [
     path('admin-userform-list/', views.get_admin_user_list, name='admin-userform-list'),
 
     path('', views.index, name='index'),    
-    path('logout/', views.user_logout, name='logout'),    
+    #path('logout/', views.user_logout, name='logout'),
+    re_path(r'^(?P<usertype>[\w.@+-]+)/logout/', views.user_logout, name='logout'),    
+    re_path(r'^(?P<usertype>[\w.@+-]+)/dashboard/', views.dashboard, name='dashboard'),    # Dashboard of logged in user
 
 ]
