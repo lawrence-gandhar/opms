@@ -42,7 +42,7 @@ class Usertype(models.Model):
     status = models.BooleanField(default = ACTIVE, db_index = True, choices = ACTIVE_INACTIVE, )
     link = models.CharField(max_length=100, null = True, blank = True, db_index = True,)
     template_folder = models.CharField(max_length=20, null = True, blank = True, db_index = True,)
-    use_nav_from_template_folder = models.BooleanField(default = True, db_index = True,)
+    use_nav_from_template_folder = models.BooleanField(default = True, db_index = True, verbose_name = 'use nav')
     navbar_template = models.CharField(max_length=250, null = True, blank = True, db_index = True,)
     access = models.ManyToManyField('self', db_index = True, blank = True, symmetrical=False, related_name = 'user_access')
 
