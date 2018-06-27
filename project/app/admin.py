@@ -23,7 +23,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Usertype)
 class UsertypeAdmin(admin.ModelAdmin):
-    list_display = ('id','name','assigned_to', 'link', 'template_folder', 'access_list', 'status',)
+    list_display = ('id','name','assigned_to', 'link', 'template_folder', 'use_nav_from_template_folder', 'navbar_template', 'access_list', 'status',)
 
 #
 # Create a class for form to handle the hashing of the password
