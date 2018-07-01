@@ -53,5 +53,19 @@ class CustomUserAdmin(admin.ModelAdmin):
 class Assessment_SettingsAdmin(admin.ModelAdmin):
     list_display = ('name', 'abbr', 'year', 'session', 'status', 'enable_self_assessment_form', 'self_assess_users', 'self_assessment_form_start_date', 'self_assessment_form_end_date', 'enable_assessment_grade_form', 'assess_graders', 'assessment_grade_start_date', 'assessment_grade_end_date', 'enable_assess_parameters', 'parameter_form_users', 'parameter_form_graders', 'parameters_start_date', 'parameters_end_date', 'self_assess_template', 'assess_grade_template', 'parameters_template', )
 
-  
+
+@admin.register(AssessmentFormSection)
+class AssessmentFormSectionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'details', 'status')
+
+@admin.register(AssessmentFormQuestions)
+class AssessmentFormQuestionsAdmin(admin.ModelAdmin):
+    list_display = ('section', 'question', 'question_type', 'status')    
+
+
+@admin.register(AssessmentFormOptions)
+class AssessmentFormOptionsAdmin(admin.ModelAdmin):
+    list_display = ('question', 'options', 'status')
+
+
 admin.site.unregister(Group)  
