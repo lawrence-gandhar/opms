@@ -172,6 +172,9 @@ class AssessmentFormSection(models.Model):
     details = models.TextField(blank = True, null = True,)
     status = models.BooleanField(default = True, db_index = True,)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         ordering = ["id"]
         verbose_name_plural = 'assessment_form_section'  
@@ -196,7 +199,7 @@ class AssessmentFormQuestions(models.Model):
     question = models.TextField(blank = True,)
     question_type = models.BigIntegerField(db_index = True, choices = QTYPES, default = TEXTAREA,)
     status = models.BooleanField(default = True, db_index = True,)
-    
+
     class Meta:
         ordering = ["id"]
         verbose_name_plural = 'assessment_form_questions'
