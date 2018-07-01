@@ -195,7 +195,8 @@ class AssessmentFormQuestions(models.Model):
     section = models.ForeignKey('AssessmentFormSection',  null = True, blank = True, on_delete = models.SET_NULL, db_index = True,)
     question = models.TextField(blank = True,)
     question_type = models.BigIntegerField(db_index = True, choices = QTYPES, default = TEXTAREA,)
-
+    status = models.BooleanField(default = True, db_index = True,)
+    
     class Meta:
         ordering = ["id"]
         verbose_name_plural = 'assessment_form_questions'
