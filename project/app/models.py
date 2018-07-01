@@ -165,3 +165,48 @@ class Assessment_Settings(models.Model):
     class META:
         ordering = ["id"]
         verbose_name_plural = 'assessment_settings'
+
+
+class AssessmentFormSection(models.Model):
+    name = models.CharField(max_length = 250, null = True, blank = True,)
+    details = models.TextField(blank = True, null = True,)
+    status = models.BooleanField(default = True, db_index = True,)
+
+    class Meta:
+        ordering = ["id"]
+        verbose_name_plural = 'assessment_form_section'  
+
+class AssessmentFormQuestions(models.Model):
+
+    TEXTAREA = 1
+    INPUT_BOX = 2
+    RADIO = 3
+    CHECKBOX = 4  
+    DROPDOWN = 5
+
+    QTYPES = (
+        (TEXTAREA, 'Textarea'), 
+        (INPUT_BOX, 'Input Box'),
+        (RADIO, 'Radio Input'),
+        (CHECKBOX, 'Checkbox'),
+        (DROPDOWN, 'Dropdown'),
+    ) 
+
+    section = models.ForeignKey('AssessmentFormSection', on_delete = models.SET_NULL, db_index = True,)
+    question = models.TextField(blank = True,)
+    question_type = models.BigIntegerField(db_index = True, choices = QTYPES, default = TEXTAREA,)
+
+    class Meta:
+        ordering = ["id"]
+        verbose_name_plural = 'assessment_form_questions'
+
+class AssessmentFormOptions(models.Model):
+    question = models.ForeignKey('AssessmentFormQuestions', on_delete = models.SET_NULL, db_index = True, null = True, blank = True,)
+    options = models.TextField(blank = True, null = True,)
+    status = models.BooleanField(default = True, db_index = True, )
+
+    class Meta:
+        ordering = ["id"]
+        verbose_name_plural = 'assessment_form_options'
+
+        

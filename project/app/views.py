@@ -23,7 +23,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Other imports
 from django.shortcuts import render, redirect
-from .models import *
+from .models import Usertype, Location, CustomUser, Department, Designation
+
 import sys, os, csv, json, datetime
 
 #
@@ -140,8 +141,12 @@ def index(request):
     submit = request.POST.get("submit", False)
 
     if submit:
+        print(request.POST["username"])
         user = authenticate(username = request.POST["username"], password = request.POST["password"])
+        
+        print(user)
         if user is not None:
+            
             login(request, user)
 
             url_link = '/'
