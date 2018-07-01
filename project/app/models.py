@@ -192,7 +192,7 @@ class AssessmentFormQuestions(models.Model):
         (DROPDOWN, 'Dropdown'),
     ) 
 
-    section = models.ForeignKey('AssessmentFormSection', on_delete = models.SET_NULL, db_index = True,)
+    section = models.ForeignKey('AssessmentFormSection',  null = True, blank = True, on_delete = models.SET_NULL, db_index = True,)
     question = models.TextField(blank = True,)
     question_type = models.BigIntegerField(db_index = True, choices = QTYPES, default = TEXTAREA,)
 
@@ -201,7 +201,7 @@ class AssessmentFormQuestions(models.Model):
         verbose_name_plural = 'assessment_form_questions'
 
 class AssessmentFormOptions(models.Model):
-    question = models.ForeignKey('AssessmentFormQuestions', on_delete = models.SET_NULL, db_index = True, null = True, blank = True,)
+    question = models.ForeignKey('AssessmentFormQuestions', null = True, blank = True ,on_delete = models.SET_NULL, db_index = True,)
     options = models.TextField(blank = True, null = True,)
     status = models.BooleanField(default = True, db_index = True, )
 
@@ -209,4 +209,4 @@ class AssessmentFormOptions(models.Model):
         ordering = ["id"]
         verbose_name_plural = 'assessment_form_options'
 
-        
+
