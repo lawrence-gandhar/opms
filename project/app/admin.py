@@ -56,16 +56,16 @@ class Assessment_SettingsAdmin(admin.ModelAdmin):
 
 @admin.register(AssessmentFormSection)
 class AssessmentFormSectionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'details', 'status')
+    list_display = ('id', 'name', 'details', 'status')
 
 @admin.register(AssessmentFormQuestions)
 class AssessmentFormQuestionsAdmin(admin.ModelAdmin):
-    list_display = ('section', 'question', 'question_type', 'status')    
+    list_display = ('id', 'section', 'question', 'question_type', 'status')    
 
 
 @admin.register(AssessmentFormOptions)
 class AssessmentFormOptionsAdmin(admin.ModelAdmin):
-    list_display = ('question', 'options', 'status')
+    list_display = ('id', 'question', 'options', 'status')
 
 
 admin.site.unregister(Group)  
