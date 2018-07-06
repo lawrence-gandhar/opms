@@ -24,6 +24,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Other imports
 from django.shortcuts import render, redirect
 from .models import Usertype, Location, CustomUser, Department, Designation
+from .models import Assessment_Settings, AssessmentFormOptions, AssessmentFormQuestions, AssessmentFormSection
 
 import sys, os, csv, json, datetime
 
@@ -128,6 +129,7 @@ def get_admin_user_list(request):
                 pass
 
             users_list = users_list.values('id','name')
+            
             serialized_q = json.dumps(list(users_list), cls=DjangoJSONEncoder)
             return HttpResponse(serialized_q)
         raise Http404      
@@ -179,13 +181,7 @@ def user_logout(request, usertype = None):
 
 @login_required
 def dashboard(request, usertype = None):
-    
-    #
-    # Get assessment settings that is active today
-    #
-    #assessment_settings = Assessment_Settings.objects.filter(__date=timezone.now())
-
-
+    pass
     return render(request, 'app/base.html',{})
 
 
@@ -195,5 +191,26 @@ def dashboard(request, usertype = None):
 
 @login_required
 def self_assessment_form(request, usertype = None):
-    pass
-    return render(request, 'app/self_assessment_form.html',{})    
+    #
+    # Get assessment settings that is active 
+    # Note that all the other records should be inactive
+    #
+    try:
+        assessment_settings = Assessment_Settings.objects.get(status = True)
+    except ObjectDoesNotExist:
+        return render(request, 'app/'+assessment_settings.self_assess_template,{})    
+
+    assessment_sections = AssessmentFormSection.objects.filter(assessment = assessment_settings.id, status = True).values()
+
+    html = list()
+    for sections in assessment_sections:
+
+        assessment_questions = AssessmentFormQuestions.objects.filter(section_id = sections["assessment_id"], status = True)
+
+        qlist = list()
+        for questions in assessment_questions:
+            qlist.append(questions)
+
+        html.append(({"section_name":sections["name"], "sestion_details":sections["details"]},json.dumps(list(qlist), cls=DjangoJSONEncoder))) 
+    
+    return render(request, 'app/'+assessment_settings.self_assess_template,json.dumps(html))    
