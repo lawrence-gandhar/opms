@@ -152,7 +152,7 @@
 
             $("select#id_department").empty().html(fetched_data);
             designation_change($("select#id_department option:selected").val(), user_details);
-            user_list(user_details);
+           
         });
     }
 
@@ -169,12 +169,13 @@
             });
 
             $("select#id_designation").empty().html(fetched_data);
+            user_list(id,user_details);
         });
     }
 
 
-    function user_list(user_details){
-        $.post("/admin-userform-list/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":$("select#id_department option:selected").val(), "usertype_id":$("select#id_usertype option:selected").val()},function(data){
+    function user_list(id, user_details){
+        $.post("/admin-userform-list/",{'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),"id":id, "usertype_id":$("select#id_usertype option:selected").val()},function(data){
             var fetched_data = '<option value="">---------</option>';
 
             $.each($.parseJSON(data),function(i,v){
