@@ -166,7 +166,9 @@ class Assessment_Settings(models.Model):
         ordering = ["id"]
         verbose_name_plural = 'assessment_settings'
 
-
+#
+# Self Assessment Form Sections  
+# 
 class AssessmentFormSection(models.Model):
     name = models.CharField(max_length = 250, null = True, blank = True,)
     details = models.TextField(blank = True, null = True,)
@@ -179,6 +181,9 @@ class AssessmentFormSection(models.Model):
         ordering = ["id"]
         verbose_name_plural = 'assessment_form_section'  
 
+#
+# Self Assessment Form Sections - Questions
+# 
 class AssessmentFormQuestions(models.Model):
 
     TEXTAREA = 1
@@ -204,6 +209,9 @@ class AssessmentFormQuestions(models.Model):
         ordering = ["id"]
         verbose_name_plural = 'assessment_form_questions'
 
+#
+# Self Assessment Form Sections - Questions - Options (only if radio, dropdown and checkbox)
+# 
 class AssessmentFormOptions(models.Model):
     question = models.ForeignKey('AssessmentFormQuestions', null = True, blank = True ,on_delete = models.SET_NULL, db_index = True,)
     options = models.TextField(blank = True, null = True,)
