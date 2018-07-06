@@ -170,6 +170,7 @@ class Assessment_Settings(models.Model):
 # Self Assessment Form Sections  
 # 
 class AssessmentFormSection(models.Model):
+    assessment = models.ForeignKey('Assessment_Settings', db_index = True, blank = True, null = True, on_delete = models.SET_NULL,)
     name = models.CharField(max_length = 250, null = True, blank = True,)
     details = models.TextField(blank = True, null = True,)
     status = models.BooleanField(default = True, db_index = True,)
