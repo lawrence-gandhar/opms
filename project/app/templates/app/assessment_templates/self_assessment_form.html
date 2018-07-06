@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+
+{% load navigation %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>SELF ASSESSMENT FORM</h2>
+        </div>
+        <form action="" method="post">
+            {{user.usertype_id|self_assessment_link}}
+        </form>
+    </div>
+</section>  
+
+{% endblock %}
