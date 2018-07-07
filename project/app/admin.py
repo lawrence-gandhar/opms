@@ -13,17 +13,30 @@ from django import forms
 class DesignationAdmin(admin.ModelAdmin):
     list_display = ('id', 'abbr', 'name', 'department', 'status',)
 
+    class Media:
+        js = ('admin_js/common.js',)
+
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('id', 'abbr', 'name', 'assigned_to', 'location',  'status', 'is_parent',)
+
+    class Media:
+        js = ('admin_js/common.js',)
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('id', 'abbr', 'name', 'status',)
 
+    class Media:
+        js = ('admin_js/common.js',)
+
 @admin.register(Usertype)
 class UsertypeAdmin(admin.ModelAdmin):
     list_display = ('id','name','assigned_to', 'link', 'template_folder', 'use_nav_from_template_folder', 'navbar_template', 'access_list', 'status',)
+
+    class Media:
+        js = ('admin_js/common.js',)
+
 
 #
 # Create a class for form to handle the hashing of the password
@@ -46,26 +59,38 @@ class CustomUserAdmin(admin.ModelAdmin):
     pass
 
     class Media:
-        js = ('admin_js/usermodel.js',)    
+        js = ('admin_js/usermodel.js','admin_js/common.js',)    
 
 
 @admin.register(Assessment_Settings)
 class Assessment_SettingsAdmin(admin.ModelAdmin):
     list_display = ('name', 'abbr', 'year', 'session', 'status', 'enable_self_assessment_form', 'self_assess_users', 'self_assessment_form_start_date', 'self_assessment_form_end_date', 'enable_assessment_grade_form', 'assess_graders', 'assessment_grade_start_date', 'assessment_grade_end_date', 'enable_assess_parameters', 'parameter_form_users', 'parameter_form_graders', 'parameters_start_date', 'parameters_end_date', 'self_assess_template', 'assess_grade_template', 'parameters_template', )
 
+    class Media:
+        js = ('admin_js/common.js',)
+
 
 @admin.register(AssessmentFormSection)
 class AssessmentFormSectionAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'details', 'status')
 
+    class Media:
+        js = ('admin_js/common.js',)
+
+
 @admin.register(AssessmentFormQuestions)
 class AssessmentFormQuestionsAdmin(admin.ModelAdmin):
     list_display = ('id', 'section', 'question', 'question_type', 'status')    
 
+    class Media:
+        js = ('admin_js/common.js',)
 
 @admin.register(AssessmentFormOptions)
 class AssessmentFormOptionsAdmin(admin.ModelAdmin):
     list_display = ('id', 'question', 'options', 'status')
+
+    class Media:
+        js = ('admin_js/common.js',)
 
 
 admin.site.unregister(Group)  
