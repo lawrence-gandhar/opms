@@ -166,10 +166,10 @@ class Assessment_Settings(models.Model):
         return ', '.join([user.name for user in self.parameters_graders.all()])         
 
     def show_only_in_locations(self):
-        return ', '.join([location.name for location in self.locations.all()])
+        return ', '.join([location.name +" ("+location.abbr+")" for location in self.locations.all()])
 
     def show_only_in_departments(self):
-        return ', '.join([department.name for department in self.departments.all()])    
+        return ', '.join([department.name + " ("+department.abbr+")" for department in self.departments.all()])    
 
 
     class META:
