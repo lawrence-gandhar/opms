@@ -1,0 +1,39 @@
+{% load userdata %}
+<div class="menu">
+	<ul class="list">
+		<li class="header">MAIN NAVIGATION</li>
+		<li class="active">
+			<a href="{% current_user_link user.usertype_id %}dashboard">
+				<i class="material-icons">home</i>
+				<span>Home</span>
+			</a>
+		</li>
+		{% load navigation %}
+		{% if user.usertype_id|self_assessment_link %}
+		<li>
+			<a href="{% current_user_link user.usertype_id %}self-assessment/">
+				<i class="material-icons">grade</i>
+				<span>Self Assessment Form</span>
+			</a>
+		</li>
+		{% endif %}
+		{% if user.usertype_id|self_assessment_grade_link %}
+		<li>
+			<a href="{% current_user_link user.usertype_id %}self-assessment/">
+				<i class="material-icons">grade</i>
+				<span>Manage Self Assessment Forms</span>
+			</a>
+		</li>
+		{% endif %}
+	</ul>
+</div>
+<!-- #Menu -->
+<!-- Footer -->
+<div class="legal">
+	<div class="copyright">
+		&copy; 2018 - 2019 <a href="javascript:void(0);">Fusion BPO</a>.
+	</div>
+	<div class="version">
+		<b>Version: </b> 1.0.5
+	</div>
+</div>
