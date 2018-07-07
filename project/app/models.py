@@ -128,7 +128,7 @@ class Assessment_Settings(models.Model):
     session = models.CharField(max_length = 20, db_index = True, blank = True, null = True,)
     status = models.BooleanField(default = True, db_index = True,)
     enable_self_assessment_form = models.BooleanField(default = True, db_index = True, verbose_name = "Self Assessment")
-    self_assessment_users = models.ManyToManyField('Usertype', db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="self_assess_form_users")
+    self_assessment_users = models.ManyToManyField('Usertype', blank = True, db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="self_assess_form_users")
     self_assessment_form_start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "self assess startdate",)
     self_assessment_form_end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "self assess enddate",)
     enable_assessment_grade_form = models.BooleanField(default = True, db_index = True, verbose_name = "Assessment Grading")
@@ -143,6 +143,9 @@ class Assessment_Settings(models.Model):
     self_assess_template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
     assess_grade_template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
     parameters_template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
+    locations = models.ManyToManyField('Location', blank = True, db_index = True, help_text = "Select the locations at which this assessment will be enabled.", related_name="enable_in_location",)
+    departments = models.ManyToManyField('Department', blank = True, db_index = True, help_text = "Select the departments which will have this assessment enabled", related_name="enable_in_departments") 
+
 
     def __str__(self):
         
@@ -161,6 +164,13 @@ class Assessment_Settings(models.Model):
 
     def parameter_form_graders(self):
         return ', '.join([user.name for user in self.parameters_graders.all()])         
+
+    def show_only_in_locations(self):
+        return ', '.join([location.name for location in self.locations.all()])
+
+    def show_only_in_departments(self):
+        return ', '.join([department.name for department in self.departments.all()])    
+
 
     class META:
         ordering = ["id"]
