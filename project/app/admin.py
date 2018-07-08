@@ -64,7 +64,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 @admin.register(Assessment_Settings)
 class Assessment_SettingsAdmin(admin.ModelAdmin):
-    list_display = ('name', 'abbr', 'year', 'session', 'status', 'show_only_in_locations', 'show_only_in_departments',  'access_users', 'start_date', 'end_date', 'template',)
+    list_display = ('name', 'abbr', 'year', 'session', 'status', 'show_only_in_locations', 'show_only_in_departments',  'access_users_list', 'start_date', 'end_date',)
 
     class Media:
         js = ('admin_js/common.js',)
