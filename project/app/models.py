@@ -140,7 +140,7 @@ class Assessment_Settings(models.Model):
             return self.name + " ( " + self.abbr +" )"
         return self.abbr
 
-    def access_users(self):
+    def access_users_list(self):
         return ', '.join([user.name for user in self.access_users.all()])    
 
     def show_only_in_locations(self):
