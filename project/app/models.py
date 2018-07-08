@@ -130,7 +130,6 @@ class Assessment_Settings(models.Model):
     access_users = models.ManyToManyField('Usertype', blank = True, db_index = True, help_text = "Select Usertypes that can fill the self assessment form", related_name="self_assess_form_users")
     start_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "self assess startdate",)
     end_date = models.DateTimeField(auto_now = False, db_index = True, null = True, blank = True, verbose_name = "self assess enddate",)
-    template = models.CharField(max_length = 250, blank = True, null = True, db_index = True,)
     locations = models.ManyToManyField('Location', blank = True, db_index = True, help_text = "Select the locations at which this assessment will be enabled.", related_name="enable_in_location",)
     departments = models.ManyToManyField('Department', blank = True, db_index = True, help_text = "Select the departments which will have this assessment enabled", related_name="enable_in_departments") 
 
