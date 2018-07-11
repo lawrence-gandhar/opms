@@ -6,21 +6,55 @@ from django.conf import settings
 # Import models
 from app.models import *
 
-import datetime
+# Condition operators for models
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
+
+from django.utils import timezone
 
 # use Library
 register = template.Library()
 
 @register.filter
-def self_assessment_link(value):
-    link_enabled = Assessment_Settings.objects.filter(status = True, enable_self_assessment_form = True, self_assessment_users__in = list([int(value)]), self_assessment_form_start_date__lte = datetime.datetime.now(), self_assessment_form_end_date__gte = datetime.datetime.now()).count()
-    if link_enabled == 1:
-        return True
-    return False
+def assessment_links(value):
 
-@register.filter
-def self_assessment_grade_link(value):
-    link_enabled = Assessment_Settings.objects.filter(status = True, enable_assessment_grade_form = True, assessment_graders__in = list([int(value)]), assessment_grade_start_date__lte = datetime.datetime.now(), assessment_grade_end_date = datetime.datetime.now()).count()
-    if link_enabled == 1:
-        return True
-    return False
+    user = CustomUser.objects.get(is_active = True, pk = int(value))
+
+    assessments = Assessment_Settings.objects.filter(status = True).filter(
+        (Q(access_users__in = [user.usertype_id]) | Q(access_users__isnull = True)),
+        (Q(locations__in = [user.location_id]) | Q(locations__isnull = True))
+    ).values()
+
+    html = []
+
+    if len(assessments) > 0:
+        html.append('<li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">widgets</i><span>Assessments</span></a>')
+        html.append('<ul class="ml-menu">')
+
+        for assess in assessments:
+            html.append('<li><a href="'+link(user.usertype_id)+'assessments/'+dynamic_links(assess["name"])+'/'+str(assess["id"])+'/">'+assess["name"].title()+'</a></li>')
+
+        html.append('</ul>')
+        html.append('</li>')
+
+    return ''.join(html)
+
+
+#
+# Usertype Links
+#
+def link(value):
+    try:
+        url = Usertype.objects.get(pk = value)
+        link = url.link
+    except ObjectDoesNotExist:
+        link = ''
+
+    return link            
+
+
+#
+# assessment links
+#     
+def dynamic_links(value):
+    return value.lower().replace(" ","-")
