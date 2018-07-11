@@ -143,10 +143,9 @@ def index(request):
     submit = request.POST.get("submit", False)
 
     if submit:
-        print(request.POST["username"])
+        
         user = authenticate(username = request.POST["username"], password = request.POST["password"])
         
-        print(user)
         if user is not None:
             
             login(request, user)
@@ -190,27 +189,9 @@ def dashboard(request, usertype = None):
 #*******************************************************************************  
 
 @login_required
-def self_assessment_form(request, usertype = None):
+def self_assessment_form(request, usertype = None, name = None, id = None):
     #
-    # Get assessment settings that is active 
-    # Note that all the other records should be inactive
+    # Get assessment settings that fulfill user criteria 
     #
-    try:
-        assessment_settings = Assessment_Settings.objects.get(status = True)
-    except ObjectDoesNotExist:
-        return render(request, 'app/'+assessment_settings.self_assess_template,{})    
-
-    assessment_sections = AssessmentFormSection.objects.filter(assessment = assessment_settings.id, status = True).values()
-
-    html = list()
-    for sections in assessment_sections:
-
-        assessment_questions = AssessmentFormQuestions.objects.filter(section_id = sections["assessment_id"], status = True)
-
-        qlist = list()
-        for questions in assessment_questions:
-            qlist.append(questions)
-
-        html.append(({"section_name":sections["name"], "sestion_details":sections["details"]},json.dumps(list(qlist), cls=DjangoJSONEncoder))) 
-    
-    return render(request, 'app/'+assessment_settings.self_assess_template,json.dumps(html))    
+    pass
+    return render(request, 'app/base.html',{})    
