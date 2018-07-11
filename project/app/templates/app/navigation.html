@@ -1,9 +1,10 @@
+{% load userdata %}
 {% load navigation %}
 <div class="menu">
 		<ul class="list">
 			<li class="header">MAIN NAVIGATION</li>
 			<li class="active">
-				<a href="index.html">
+				<a href="{% current_user_link user.usertype_id %}dashboard/">
 					<i class="material-icons">home</i>
 					<span>Home</span>
 				</a>
