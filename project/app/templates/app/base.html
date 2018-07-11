@@ -106,6 +106,18 @@
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
            {% include user.usertype_id|menu_template %}
+        
+        <!-- Footer -->
+        <div class="legal">
+            <div class="copyright">
+                &copy; 2018 - 2019 <a href="javascript:void(0);">PMS</a>.
+            </div>
+            <div class="version">
+                <b>Version: </b> 1.0.0
+            </div>
+        </div>
+        <!-- #Footer -->
+    
         </aside>
         <!-- #END# Left Sidebar -->
         
@@ -120,7 +132,7 @@
     <script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
 
 	<!-- Jquery CountTo Plugin Js -->
-    <!--<script src="{% static 'plugins/jquery-countto/jquery.countTo.js' %}"></script>-->
+    <script src="{% static 'plugins/jquery-countto/jquery.countTo.js' %}"></script>
 	
     <!-- Waves Effect Plugin Js -->
     <script src="{% static 'plugins/node-waves/waves.js' %}"></script>
@@ -131,7 +143,7 @@
     <script src="{% static 'js/pages/index.js' %}"></script>
 
     <!-- Demo Js -->
-    <!--<script src="{% static 'js/demo.js' %}"></script>-->
+    <script src="{% static 'js/demo.js' %}"></script>
 		
 	<!-- Script for adding and removing class "active" on li tags in navigation -->
     <script>
