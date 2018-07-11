@@ -15,8 +15,7 @@ try:
         #path('logout/', views.user_logout, name='logout'),
         re_path(r'^(?P<usertype>[\w.@+-]+)/logout/', views.user_logout),    
         re_path(r'^(?P<usertype>[\w.@+-]+)/dashboard/', views.dashboard),    # Dashboard of logged in user
-        re_path(r'^(?P<usertype>[\w.@+-]+)/self-assessment/', views.self_assessment_form),    # Dashboard of logged in user
-
+        re_path(r'^(?P<usertype>[\w.@+-]+)/assessments/(?P<name>[\w.@+-]+)/(?P<id>[\d])/', views.self_assessment_form),
     ]
 
 
@@ -33,6 +32,6 @@ except ImportError:
         url('', views.index, name='index'),    
         url(r'^(?P<usertype>[\w.@+-]+)/logout/', views.user_logout),    
         url(r'^(?P<usertype>[\w.@+-]+)/dashboard/', views.dashboard),    # Dashboard of logged in user
-        url(r'^(?P<usertype>[\w.@+-]+)/self-assessment/', views.self_assessment_form),
+        url(r'^(?P<usertype>[\w.@+-]+)/assessments/(?P<name>[\w.@+-]+)/(?P<id>[\d])/', views.self_assessment_form),
     ]
 
