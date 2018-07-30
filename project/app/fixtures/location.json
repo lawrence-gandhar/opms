@@ -1,0 +1,29 @@
+[
+    {
+      "model": "app.Location",
+      "pk": 1,
+      "fields": {
+        "name": "Kolkata",
+        "abbr": "KOL - 1",
+        "status": 1
+      }
+    },
+    {
+        "model": "app.Location",
+        "pk": 2,
+        "fields": {
+            "name": "Kolkata",
+            "abbr": "KOL - 2",
+            "status": 1
+        }
+    },
+    {
+        "model": "app.Location",
+        "pk": 3,
+        "fields": {
+            "name": "Paris",
+            "abbr": "PAR - 1",
+            "status": 1
+        }
+    }
+  ]
