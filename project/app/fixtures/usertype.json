@@ -1,6 +1,6 @@
 [
   {
-    "model": "app.usertype_tbl",
+    "model": "app.UserType",
     "pk": 1,
     "fields": {
       "name": "Manager",
@@ -13,7 +13,7 @@
     }
   },
   {
-    "model": "myapp.person",
+    "model": "app.UserType",
     "pk": 2,
     "fields": {
       "name": "Supervisor",
@@ -26,7 +26,7 @@
     }
   },
   {
-    "model": "myapp.person",
+    "model": "app.UserType",
     "pk": 3,
     "fields": {
       "name": "Agent",
