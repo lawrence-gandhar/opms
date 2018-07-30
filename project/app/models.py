@@ -111,8 +111,8 @@ class Designation(models.Model):
 #
 class CustomUser(AbstractUser):
     name = models.CharField(blank=True, max_length=255, db_index = True, null = True,)
-    location = models.ForeignKey('Location', on_delete = models.SET_NULL, db_index = True, blank = True, null = True,)
-    usertype = models.ForeignKey('Usertype', db_index = True, blank = True, null = True, on_delete = models.SET_NULL,)
+    location = models.ManyToManyField('Location',db_index = True, blank = True,)
+    usertype = models.ManyToManyField('Usertype', db_index = True, blank = True,)
     department = models.ForeignKey('Department', on_delete = models.SET_NULL, blank = True, null = True, db_index = True,)
     designation = models.ForeignKey('Designation', on_delete=models.SET_NULL, db_index = True, blank = True, null = True,)
     assigned_to = models.ForeignKey('self', db_index = True, blank = True, null = True, on_delete = models.SET_NULL,)
