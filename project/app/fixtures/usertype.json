@@ -1,0 +1,41 @@
+[
+  {
+    "model": "app.UserType",
+    "pk": 1,
+    "fields": {
+      "name": "Manager",
+      "assigned_to": null,
+      "status": 1,
+      "link": "manager",
+      "template_folder": null,
+      "use_nav_from_template_folder": 1,
+      "navbar_template" : "manager"
+    }
+  },
+  {
+    "model": "app.UserType",
+    "pk": 2,
+    "fields": {
+      "name": "Supervisor",
+      "assigned_to": null,
+      "status": 1,
+      "link": "supervisor",
+      "template_folder": null,
+      "use_nav_from_template_folder": 1,
+      "navbar_template" : "supervisor"
+    }
+  },
+  {
+    "model": "app.UserType",
+    "pk": 3,
+    "fields": {
+      "name": "Agent",
+      "assigned_to": null,
+      "status": 1,
+      "link": "agent",
+      "template_folder": null,
+      "use_nav_from_template_folder": 0,
+      "navbar_template" : "agent"
+    }
+  }
+]
