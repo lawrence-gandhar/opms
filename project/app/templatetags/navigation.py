@@ -7,7 +7,7 @@ from django.conf import settings
 from app.models import *
 
 # Condition operators for models
-from django.db.models import Q
+from django.db.models import Q, When
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.utils import timezone
@@ -22,9 +22,10 @@ def assessment_links(value):
 
     assessments = Assessment_Settings.objects.filter(status = True).filter(
         (Q(access_users__in = [user.usertype_id]) | Q(access_users__isnull = True)),
-        (Q(locations__in = [user.location_id]) | Q(locations__isnull = True))
+        (Q(locations__in = [user.location_id]) | Q(locations__isnull = True)),
+        (Q(departments__in = [user.location_id]) | Q(departments__isnull = True))
     ).values()
-
+    
     html = []
 
     if len(assessments) > 0:
